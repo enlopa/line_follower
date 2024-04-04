@@ -15,8 +15,7 @@ float PID::update(float error, float dt)
     }
 
     float proportional = error;
-    //float i = (error + previous_error)*0.5f*dt*ki;
-    //acum_integral = acum_integral + i;
+
     acum_integral += (error + prev_error)*0.5f*dt;
     
     if(acum_integral > int_saturation) {

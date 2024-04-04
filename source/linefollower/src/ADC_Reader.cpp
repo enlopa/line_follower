@@ -34,5 +34,4 @@ int ADC_Reader::read_sensor(void)
     //ESP_LOGE("main", "Valor del sensor: %d", sensor_value);
     adc_oneshot_read(adc1_handle, channel, &adc_raw[0][0]);
     return adc_raw[0][0];
-    //return 1;
 }

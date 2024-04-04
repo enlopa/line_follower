@@ -26,14 +26,14 @@ void init_motor_controller(void) {
     motor_controller.set_speed(300);
 }
 
-void init_line_sensor_controller()
-{
+//void init_line_sensor_controller()
+//{
     //line_sensor_controller = LineSensorController(LSENSOR_ARRAY_NUM_SENSORS, LSENSOR_ARRAY_ENABLE, LSENSOR_CONTROLLER_SIGNAL, LSENSOR_CONTROLLER_ENABLE, LSENSOR_CONTROLLER_S0, LSENSOR_CONTROLLER_S1, LSENSOR_CONTROLLER_S2, LSENSOR_CONTROLLER_S3);
-}
+//}
 
 void init_system(void) {
     init_motor_controller();
-    init_line_sensor_controller();
+    //init_line_sensor_controller();
 }
 
 void app_main() {
@@ -47,6 +47,7 @@ void app_main() {
         
         error = line_sensor_controller.get_error_from_sensor_array();
         PID mypid(1,0,0);
+  
         //Se debe calcular el tiempo que ha pasado
         float current_pid = mypid.update(error, 5);
         printf("Valor del pid %f \n", current_pid);

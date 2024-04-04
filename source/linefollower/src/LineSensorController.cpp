@@ -47,7 +47,7 @@ int LineSensorController::read_sensor_of_array(int position)
     //y leemos el signal
     gpio_set_level(lsensor_array_enable,1);
     
-    //TODO: BORRAR
+    //TODO: Leer realmente el sensor que se pasa por parámetro
     //Activamos el pin S3 para leer el adc 4
     //gpio_set_level(mux_s2_pin,1);
     gpio_set_level(mux_s0_pin,1);
@@ -57,99 +57,13 @@ int LineSensorController::read_sensor_of_array(int position)
     gpio_set_level(lsensor_array_enable,0); 
 }
 
-/*
-void LineSensorController::read_sensor_array()
-{
-    int sensor_values[8];
-    int indexed_array[8][4] = {
-        {1,1,0,0},  //Sensor 1 is connected to the C3 PIN in the mux
-        {0,0,1,0},  //Sensor 2 is connected to the C4 PIN in the mux
-        {1,0,1,0},  //Sensor 3 is connected to the C5 PIN in the mux
-        {0,1,1,0},  //Sensor 4 is connected to the C6 PIN in the mux
-        {1,1,1,0},  //Sensor 5 is connected to the C7 PIN in the mux
-        {0,0,0,1},  //Sensor 6 is connected to the C8 PIN in the mux
-        {1,0,0,1},  //Sensor 7 is connected to the C9 PIN in the mux
-        {0,1,0,1}   //Sensor 8 is connected to the C10 PIN in the mux
-    };
-
-    gpio_num_t array_mux_pines[4] = {mux_s0_pin, mux_s1_pin, mux_s2_pin, mux_s3_pin};
-
-    gpio_set_level(lsensor_array_enable,1);
-    vTaskDelay(10 / portTICK_PERIOD_MS);
-    
-    // For each sensor: activate pins in the mux and read the signal PIN to get the value of each sensor
-    int i,j;
-    for (i=0; i<8; i++) {
-        for (j=0;j<4;j++) {
-            gpio_set_level(array_mux_pines[j],indexed_array[i][j]);
-            //ESP_LOGE("LineSensorController", "Sensor activado %d: S%d: %d", i, j, indexed_array[i][j]); 
-        }
-        int sensor_value = adc_reader.read_sensor();
-        sensor_values[i] = sensor_value;
-        //ESP_LOGE("LineSensorController", "VAlor Sensor %d: %d", i, sensor_value); 
-    }
-
-    gpio_set_level(lsensor_array_enable,0);
-    
-    ESP_LOGI("LineSensorController", "Valores de los sensores %4d | %4d | %4d | %4d | %4d | %4d | %4d | %4d", sensor_values[0],sensor_values[1],sensor_values[2],sensor_values[3],sensor_values[4],sensor_values[5],sensor_values[6],sensor_values[7]); 
-    
-    //Normalizamos los valores
-    for (i=0; i<8; i++) {
-        sensor_values[i] = map(sensor_values[i],30,2000,0,100);
-    }
-
-    ESP_LOGI("LineSensorController", "Valores normalizados %4d | %4d | %4d | %4d | %4d | %4d | %4d | %4d", sensor_values[0],sensor_values[1],sensor_values[2],sensor_values[3],sensor_values[4],sensor_values[5],sensor_values[6],sensor_values[7]); 
-}
-*/
-
-//void LineSensorController::maneuver()
-//{
-//  normalized_values = read_normalized_sensor_array();
-//    error = getError(normalized_values);
-//    PID mypid(1,0,0);
-    //Se debe calcular el tiempo que ha pasado
-//    float pid_value = mypid.update(error, 8);
-//printf("Valor del pid %f \n", mypid.update(error, 8));
-
-
-
-
-//}
 
 float LineSensorController::get_error_from_sensor_array()
 {
-    /*
-    ArraySensorData array_sensor_data = ArraySensorData(lsensor_array_num_sensors);
-    const uint32_t sensorOffset = 3;
-    uint32_t currentSensor;
-    int sensor_normalized_values[lsensor_array_num_sensors];
     
-    gpio_set_level(lsensor_array_enable,1);
-    vTaskDelay(10 / portTICK_PERIOD_MS);
-
-    for (uint32_t i = 0; i < lsensor_array_num_sensors; i++) {
-        
-        currentSensor = sensorOffset + i;
-        gpio_set_level(mux_s0_pin, currentSensor & 0x1U);
-        gpio_set_level(mux_s1_pin, (currentSensor>>1) & 0x1U);
-        gpio_set_level(mux_s2_pin, (currentSensor>>2) & 0x1U);
-        gpio_set_level(mux_s3_pin, (currentSensor>>3) & 0x1U);
-
-        int sensor_value = adc_reader.read_sensor();
-        array_sensor_data.raw_values[i] = sensor_value;
-        array_sensor_data.normalized_values[i] = map(sensor_value,30,2000,0,100);
-        //Esta linea sobrará cuando pase al objeto y ya no se use el array.
-        sensor_normalized_values[i] = map(sensor_value,30,2000,0,100);
-    }
-    
-    gpio_set_level(lsensor_array_enable,0);
-    return getError(sensor_normalized_values);
-    */
     ArraySensorData array_sensor_data = read_sensor_array();
-    //printf("=================================================================%d", array_sensor_data.normalized_values[7]);
+    
     return getError(array_sensor_data);
-    //return 0;
-
 }
 
 ArraySensorData LineSensorController::read_sensor_array()
@@ -173,9 +87,6 @@ ArraySensorData LineSensorController::read_sensor_array()
         int sensor_value = adc_reader.read_sensor();
         array_sensor_data.raw_values[i] = sensor_value;
         array_sensor_data.normalized_values[i] = map(sensor_value,30,2000,0,100);
-        
-        //Esta linea sobrará cuando pase al objeto y ya no se use el array.
-        //sensor_normalized_values[i] = map(sensor_value,30,2000,0,100);
     }
     
     gpio_set_level(lsensor_array_enable,0);
@@ -183,42 +94,6 @@ ArraySensorData LineSensorController::read_sensor_array()
     return array_sensor_data;
 }
 
-/*
-void LineSensorController::read_sensor_array()
-{
-    const uint32_t sensorOffset = 3;
-    uint32_t currentSensor;
-    int sensor_raw_values[lsensor_array_num_sensors];
-    int sensor_normalized_values[lsensor_array_num_sensors];
-    
-    gpio_set_level(lsensor_array_enable,1);
-    vTaskDelay(10 / portTICK_PERIOD_MS);
-    float error = 0;
-
-    for (uint32_t i = 0; i < lsensor_array_num_sensors; i++) {
-        
-        currentSensor = sensorOffset + i;
-        gpio_set_level(mux_s0_pin, currentSensor & 0x1U);
-        gpio_set_level(mux_s1_pin, (currentSensor>>1) & 0x1U);
-        gpio_set_level(mux_s2_pin, (currentSensor>>2) & 0x1U);
-        gpio_set_level(mux_s3_pin, (currentSensor>>3) & 0x1U);
-
-        int sensor_value = adc_reader.read_sensor();
-        sensor_raw_values[i] = sensor_value;
-        sensor_normalized_values[i] = map(sensor_value,30,2000,0,100);
-
-        printf("%d ", sensor_raw_values[i]);
-    }
-    printf("\n");
-    error = getError(sensor_normalized_values);
-    printf("Valor del error %f \n", error);
-    gpio_set_level(lsensor_array_enable,0);
-    
-    //PID mypid(1,0,0);
-    //Se debe calcular el tiempo que ha pasado
-    //printf("Valor del pid %f \n", mypid.update(error, 8));
-}
-*/
 
 float LineSensorController::getError(int sensor_normalized_values[])
 {
