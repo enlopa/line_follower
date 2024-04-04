@@ -18,7 +18,6 @@ public:
 private:
     void init_hw(adc_channel_t mux_signal_channel);
     long map(int x, int in_min, int in_max, int out_min, int out_max);
-    float getError(int sensor_normalized_values[]);
     float getError(ArraySensorData& array_data);
     
     ADC_Reader adc_reader;
@@ -27,16 +26,6 @@ private:
     gpio_num_t lsensor_array_enable, mux_enable_pin, mux_s0_pin, mux_s1_pin, mux_s2_pin, mux_s3_pin;
     uint32_t lsensor_array_num_sensors;
   
-
-    //Hacer un objeto mux con getters y setters e instanciarlo.
-    /*
-    struct array_sensor_data
-    {
-        int raw_values[8];
-        int normalized_values[8];
-    };
-    */
-
 };
 
 #endif //__LineSensorController_H__
