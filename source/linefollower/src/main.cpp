@@ -5,6 +5,7 @@
 
 #include "esp_system.h"
 #include "esp_log.h"
+#include <esp_timer.h>
 
 #include "config.h"
 #include "MotorController.h"
@@ -40,55 +41,27 @@ void app_main() {
 
     init_system();
 
+    uint64_t last_call = esp_timer_get_time();
+    uint64_t curr_time = esp_timer_get_time();
 
     while(1) {
         
         float error = 0;
         
+        curr_time = esp_timer_get_time();
+        
+        int velocidad_base = 600;
+
         error = line_sensor_controller.get_error_from_sensor_array();
         PID mypid(1,0,0);
-  
+
         //Se debe calcular el tiempo que ha pasado
-        float current_pid = mypid.update(error, 5);
+        float current_pid = mypid.update(error, curr_time-last_call);
         printf("Valor del pid %f \n", current_pid);
 
-        if (current_pid > 0.5f ) {
-            motor_controller.maneuver(300 + (current_pid*10), 300 - (current_pid*10));
-            printf("PID positivo\n");
-        } else if (current_pid < -0.5f) {       
-            motor_controller.maneuver(300 + (current_pid*10), 300 - (current_pid*10));
-            printf("PID negativo\n");
-        } else {
-            motor_controller.maneuver(300, 300);
-            printf("PID neutro\n");
-        }
+        motor_controller.maneuver(velocidad_base - (current_pid*20), velocidad_base + (current_pid*20));
+        
+        last_call = curr_time;
     }
 
-
-/*
-    ESP_LOGI("main", "Starting Motor running at half speed for 5 seconds with ramp up and ramp down.");
-  
-    motor_controller.forward();
-    vTaskDelay(4000 / portTICK_PERIOD_MS);
-
-    motor_controller.stop();
-
-    vTaskDelay(2000 / portTICK_PERIOD_MS);
-    
-    motor_controller.backward();
-    vTaskDelay(1200 / portTICK_PERIOD_MS);
-    motor_controller.stop();
-
-    vTaskDelay(2000 / portTICK_PERIOD_MS);
-
-    motor_controller.right();
-    vTaskDelay(2500 / portTICK_PERIOD_MS);
-    motor_controller.stop();
-
-    vTaskDelay(2000 / portTICK_PERIOD_MS);
-
-    motor_controller.left();
-    vTaskDelay(2500 / portTICK_PERIOD_MS);
-    motor_controller.stop();
-*/
 }

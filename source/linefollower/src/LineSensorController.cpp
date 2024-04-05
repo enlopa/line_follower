@@ -96,7 +96,7 @@ ArraySensorData LineSensorController::read_sensor_array()
 
 float LineSensorController::getError(ArraySensorData& array_data)
 {
-    float num = (-28 * (array_data.normalized_values[0] - array_data.normalized_values[7])) + (-20 * (array_data.normalized_values[1] - array_data.normalized_values[6])) + (-12 * (array_data.normalized_values[2] - array_data.normalized_values[5])) + (-0.4 * (array_data.normalized_values[3] - array_data.normalized_values[4]));
+    float num = (-28 * (array_data.normalized_values[0] - array_data.normalized_values[7])) + (-20 * (array_data.normalized_values[1] - array_data.normalized_values[6])) + (-12 * (array_data.normalized_values[2] - array_data.normalized_values[5])) + (-4 * (array_data.normalized_values[3] - array_data.normalized_values[4]));
     float denom = array_data.normalized_values[0] + array_data.normalized_values[1] + array_data.normalized_values[2] + array_data.normalized_values[3] + array_data.normalized_values[4] + array_data.normalized_values[5] + array_data.normalized_values[6] + array_data.normalized_values[7];
     float error = num / denom;
     return error;

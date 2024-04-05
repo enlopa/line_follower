@@ -86,6 +86,15 @@ void MotorController::init_hw(void)
 
 void MotorController::maneuver(uint32_t speed_motor_right, uint32_t speed_motor_left)
 {
+    printf("Velocidad Motores: %lu | %lu", speed_motor_right, speed_motor_left);
+    /*
+    if (speed_motor_right < 0) {
+        speed_motor_right = 0;
+    }
+    if (speed_motor_left < 0) {
+        speed_motor_left = 0;
+    }
+    */
     right_motor.set_speed(speed_motor_right);
     left_motor.set_speed(speed_motor_left);
     forward();
