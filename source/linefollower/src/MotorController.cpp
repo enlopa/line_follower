@@ -14,13 +14,11 @@ void MotorController::set_standby_pin(gpio_num_t standby_pin)
 
 void MotorController::enable(void) 
 {
-    //Activamos el pin de standby
     gpio_set_level(MOTOR_CONTROLLER_STANDBY, 1);
 }
 
 void MotorController::disable(void) 
 {
-    //Desactivamos el pin de standby
     gpio_set_level(MOTOR_CONTROLLER_STANDBY, 0);
 }
 
@@ -45,8 +43,6 @@ void MotorController::stop(void)
     right_motor.stop();
     left_motor.stop();
 }
-
-//void MotorController::break();
 
 void MotorController::forward(void) 
 {
@@ -81,20 +77,10 @@ void MotorController::init_hw(void)
     io_conf.pull_down_en = GPIO_PULLDOWN_DISABLE,
     io_conf.pull_up_en = GPIO_PULLUP_DISABLE,
     gpio_config(&io_conf);
-    
 }
 
 void MotorController::maneuver(uint32_t speed_motor_right, uint32_t speed_motor_left)
 {
-    printf("Velocidad Motores: %lu | %lu", speed_motor_right, speed_motor_left);
-    /*
-    if (speed_motor_right < 0) {
-        speed_motor_right = 0;
-    }
-    if (speed_motor_left < 0) {
-        speed_motor_left = 0;
-    }
-    */
     right_motor.set_speed(speed_motor_right);
     left_motor.set_speed(speed_motor_left);
     forward();

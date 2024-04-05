@@ -55,7 +55,7 @@ void Motor::init_hw(void)
     io_conf.pull_up_en = GPIO_PULLUP_DISABLE,
     gpio_config(&io_conf);
 
-    //Definimos el timer
+    //Ledc timer definition
     ledc_timer.speed_mode = LEDC_LOW_SPEED_MODE, // timer mode
     ledc_timer.duty_resolution = LEDC_TIMER_10_BIT, // resolution of PWM duty
     ledc_timer.timer_num = LEDC_TIMER_0, // timer index
@@ -64,7 +64,7 @@ void Motor::init_hw(void)
     ledc_timer.clk_cfg = LEDC_AUTO_CLK, // Auto select the source clock
     ledc_timer_config(&ledc_timer);
 
-    // Definimos el canal
+    // Ledc channel definition
     ledc_channel.gpio_num = pwm;
     ledc_channel.speed_mode = LEDC_LOW_SPEED_MODE;
     ledc_channel.channel = channel;
@@ -75,7 +75,4 @@ void Motor::init_hw(void)
     ledc_channel.hpoint = 0;
     //ledc_channel.flags.output_invert = 0;
     ledc_channel_config(&ledc_channel);
-    // Creamos el motor parado
-    //gpio_set_level(a1, 0);
-    //gpio_set_level(a2, 0);
 }
