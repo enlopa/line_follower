@@ -15,7 +15,6 @@
 
 MotorController motor_controller;
 LineSensorController line_sensor_controller;
-// = LineSensorController(LSENSOR_ARRAY_NUM_SENSORS, LSENSOR_ARRAY_ENABLE, LSENSOR_CONTROLLER_SIGNAL, LSENSOR_CONTROLLER_ENABLE, LSENSOR_CONTROLLER_S0, LSENSOR_CONTROLLER_S1, LSENSOR_CONTROLLER_S2, LSENSOR_CONTROLLER_S3);
 
 extern "C" void app_main();
 
@@ -58,6 +57,4 @@ void app_main() {
         
         last_call = curr_time;
     }
-
-
 }
