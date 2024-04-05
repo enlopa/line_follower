@@ -26,7 +26,7 @@ void init_motor_controller(void) {
     motor_controller.set_speed(DEFAULT_SPEED);
 }
 
-void init_line_sensor_controller()
+void init_line_sensor_controller(void)
 {
     line_sensor_controller = LineSensorController(LSENSOR_ARRAY_NUM_SENSORS, LSENSOR_ARRAY_ENABLE, LSENSOR_CONTROLLER_SIGNAL, LSENSOR_CONTROLLER_ENABLE, LSENSOR_CONTROLLER_S0, LSENSOR_CONTROLLER_S1, LSENSOR_CONTROLLER_S2, LSENSOR_CONTROLLER_S3);
 }

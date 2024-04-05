@@ -13,7 +13,6 @@ public:
     void set_speed(uint32_t speed);
     uint32_t get_speed();
     void stop();
-    //void break();
     void forward();
     void backward();
 
