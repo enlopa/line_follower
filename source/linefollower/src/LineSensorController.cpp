@@ -43,7 +43,7 @@ void LineSensorController::init_hw(adc_channel_t mux_signal_channel)
     adc_reader = ADC_Reader(mux_signal_channel);
 }
 
-float LineSensorController::get_error_from_sensor_array()
+float LineSensorController::get_deviation_from_line()
 {
     
     ArraySensorData array_sensor_data = read_sensor_array();

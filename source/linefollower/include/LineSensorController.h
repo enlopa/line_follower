@@ -12,7 +12,7 @@ public:
     LineSensorController();
     
     ArraySensorData read_sensor_array();
-    float get_error_from_sensor_array();
+    float get_deviation_from_line();
     
 private:
     void init_hw(adc_channel_t mux_signal_channel);

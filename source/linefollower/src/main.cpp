@@ -50,7 +50,7 @@ void app_main() {
 
         curr_time = esp_timer_get_time();
 
-        error = line_sensor_controller.get_error_from_sensor_array();
+        error = line_sensor_controller.get_deviation_from_line();
         float current_pid = mypid.update(error, curr_time-last_call);
         motor_controller.maneuver(DEFAULT_SPEED - (current_pid*20), DEFAULT_SPEED + (current_pid*20));
         printf("Valor del pid %f \n", current_pid);
