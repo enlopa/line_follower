@@ -6,8 +6,8 @@
 
 class ADC_Reader {
 public:
-    ADC_Reader();
     ADC_Reader(adc_channel_t adc_channel);
+    ADC_Reader();
 
     int read_sensor();
 

@@ -8,8 +8,9 @@
 
 class LineSensorController {
 public:
-    LineSensorController();
     LineSensorController(uint32_t lsensor_array_num_sensors, gpio_num_t lsensor_array_enable, adc_channel_t mux_signal_channel, gpio_num_t mux_enable_pin, gpio_num_t mux_s0_pin, gpio_num_t mux_s1_pin, gpio_num_t mux_s2_pin, gpio_num_t mux_s3_pin);
+    LineSensorController();
+    
     ArraySensorData read_sensor_array();
     float get_error_from_sensor_array();
     

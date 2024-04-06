@@ -5,7 +5,6 @@
 
 class MotorController {
 public:
-
     MotorController();
     
     void enable();

@@ -5,7 +5,6 @@
 
 class ArraySensorData {
 public:
-
     ArraySensorData(int num_sensors);
 
     void reset_sensor_data();

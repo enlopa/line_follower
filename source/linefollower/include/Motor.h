@@ -6,10 +6,9 @@
 
 class Motor {
 public:
-
-    Motor();
     Motor(gpio_num_t a1, gpio_num_t a2, gpio_num_t pwm, ledc_channel_t channel);
-    
+    Motor();
+
     void set_speed(uint32_t speed);
     uint32_t get_speed();
     void stop();
