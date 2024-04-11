@@ -16,8 +16,6 @@ private:
     void init_hw();
 
     adc_oneshot_unit_handle_t adc1_handle;
-    adc_oneshot_unit_init_cfg_t init_config1 = {};
-    adc_oneshot_chan_cfg_t config = {};
     adc_channel_t channel;
 };
 

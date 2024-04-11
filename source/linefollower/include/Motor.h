@@ -21,9 +21,6 @@ private:
 
     gpio_num_t a1, a2, pwm;
     ledc_channel_t channel;
-    gpio_config_t io_conf = {};
-    ledc_timer_config_t ledc_timer = {};
-    ledc_channel_config_t ledc_channel = {};
     uint32_t speed;
 
 };

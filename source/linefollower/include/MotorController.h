@@ -27,7 +27,6 @@ private:
 
     Motor right_motor;
     Motor left_motor;
-    gpio_config_t io_conf = {};
     gpio_num_t MOTOR_CONTROLLER_STANDBY;
 
 };

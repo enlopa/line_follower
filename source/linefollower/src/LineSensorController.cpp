@@ -4,7 +4,7 @@
 #include "freertos/task.h"
 
 #include "hal/adc_types.h"
-#include "esp_log.h"
+#include "esp_err.h"
 
 LineSensorController::LineSensorController()
 {
@@ -27,23 +27,25 @@ LineSensorController::LineSensorController(uint32_t lsensor_array_num_sensors_, 
 
 void LineSensorController::init_hw(adc_channel_t mux_signal_channel) 
 {
+    gpio_config_t io_conf;
+
     io_conf.mode = GPIO_MODE_OUTPUT;
     io_conf.pin_bit_mask = (1ULL<<lsensor_array_enable) | (1ULL<<mux_enable_pin) | (1ULL<<mux_s0_pin) | (1ULL<<mux_s1_pin) | (1ULL<<mux_s2_pin) | (1ULL<<mux_s3_pin);
     io_conf.pull_down_en = GPIO_PULLDOWN_ENABLE;
     io_conf.intr_type = GPIO_INTR_DISABLE;
-    gpio_config(&io_conf);
+    ESP_ERROR_CHECK(gpio_config(&io_conf));
 
     gpio_set_level(lsensor_array_enable, 0);
     gpio_set_level(mux_enable_pin, 0);
-    gpio_set_level(mux_s0_pin, 0);
-    gpio_set_level(mux_s1_pin, 0);
-    gpio_set_level(mux_s2_pin, 0);
-    gpio_set_level(mux_s3_pin, 0);
+    //gpio_set_level(mux_s0_pin, 0);
+    //gpio_set_level(mux_s1_pin, 0);
+    //gpio_set_level(mux_s2_pin, 0);
+    //gpio_set_level(mux_s3_pin, 0);
 
     adc_reader = ADC_Reader(mux_signal_channel);
 }
 
-float LineSensorController::get_deviation_from_line()
+float LineSensorController::get_line_deviation()
 {
     
     ArraySensorData array_sensor_data = read_sensor_array();

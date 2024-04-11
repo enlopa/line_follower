@@ -13,7 +13,7 @@ public:
     std::vector<int> normalized_values;
 
 private:
-    int num_sensors = 8;
+    
 };
 
 #endif //__ARRAYSENSORDATA_H__

@@ -12,7 +12,7 @@ public:
     LineSensorController();
     
     ArraySensorData read_sensor_array();
-    float get_deviation_from_line();
+    float get_line_deviation();
     
 private:
     void init_hw(adc_channel_t mux_signal_channel);
@@ -21,7 +21,6 @@ private:
     
     ADC_Reader adc_reader;
     adc_channel_t mux_signal_channel;
-    gpio_config_t io_conf = {};
     gpio_num_t lsensor_array_enable, mux_enable_pin, mux_s0_pin, mux_s1_pin, mux_s2_pin, mux_s3_pin;
     uint32_t lsensor_array_num_sensors;
   
