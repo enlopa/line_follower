@@ -17,7 +17,7 @@ public:
 private:
     void init_hw(adc_channel_t mux_signal_channel);
     long map(int x, int in_min, int in_max, int out_min, int out_max);
-    float get_error(ArraySensorData& array_data);
+    float calculate_deviation(ArraySensorData& array_data);
     
     ADC_Reader adc_reader;
     adc_channel_t mux_signal_channel;

@@ -50,7 +50,7 @@ float LineSensorController::get_line_deviation()
     
     ArraySensorData array_sensor_data = read_sensor_array();
     
-    return get_error(array_sensor_data);
+    return calculate_deviation(array_sensor_data);
 }
 
 ArraySensorData LineSensorController::read_sensor_array()
@@ -80,7 +80,7 @@ ArraySensorData LineSensorController::read_sensor_array()
     return array_sensor_data;
 }
 
-float LineSensorController::get_error(ArraySensorData& array_data)
+float LineSensorController::calculate_deviation(ArraySensorData& array_data)
 {
     float num = (-28 * (array_data.normalized_values[0] - array_data.normalized_values[7])) + (-20 * (array_data.normalized_values[1] - array_data.normalized_values[6])) + (-12 * (array_data.normalized_values[2] - array_data.normalized_values[5])) + (-4 * (array_data.normalized_values[3] - array_data.normalized_values[4]));
     float denom = array_data.normalized_values[0] + array_data.normalized_values[1] + array_data.normalized_values[2] + array_data.normalized_values[3] + array_data.normalized_values[4] + array_data.normalized_values[5] + array_data.normalized_values[6] + array_data.normalized_values[7];
